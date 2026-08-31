@@ -32,7 +32,7 @@ Response `422`: automatico da FastAPI se `n` non è un intero `>= 0`.
 - Serve `index.html`
 
 ## Gestione errori (frontend)
-- Chiamata a `/calcola` fallita (rete, 5xx, 422): contatore locale resta al valore già incrementato, si mostra un banner di errore non bloccante, l'area risultati mantiene l'ultimo valore valido (non si azzera)
+- Chiamata a `/compute/{n}` fallita (rete, 5xx, 422): contatore locale resta al valore già incrementato, si mostra un banner di errore non bloccante, l'area risultati mantiene l'ultimo valore valido (non si azzera)
 - Nessun retry automatico
 
 ## UI

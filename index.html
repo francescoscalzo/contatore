@@ -55,10 +55,11 @@
     <button id="reset">Reset</button>
   </div>
   <div class="results" id="results"></div>
-  <div class="error" id="error">Errore nel calcolo: backend non raggiungibile.</div>
+  <div class="error" id="error">Errore nel calcolo dei risultati.</div>
 
   <script>
     let count = 0;
+    let requestVersion = 0;
     const counterEl = document.getElementById('counter');
     const resultsEl = document.getElementById('results');
     const errorEl = document.getElementById('error');
@@ -66,18 +67,22 @@
     async function increment() {
       count += 1;
       counterEl.textContent = count;
+      const version = ++requestVersion;
       try {
         const res = await fetch(`/compute/${count}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
+        if (version !== requestVersion) return;
         resultsEl.textContent = `√ = ${data.sqrt}   ² = ${data.square}   ×π = ${data.times_pi}`;
         errorEl.style.display = 'none';
       } catch (err) {
+        if (version !== requestVersion) return;
         errorEl.style.display = 'block';
       }
     }
 
     function reset() {
+      requestVersion += 1;
       count = 0;
       counterEl.textContent = count;
       resultsEl.textContent = '';
