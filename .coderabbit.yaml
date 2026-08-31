@@ -23,6 +23,7 @@ reviews:
     enabled: true
     base_branches:
       - "main"
+      - "develop"
 
 chat:
   auto_reply: true

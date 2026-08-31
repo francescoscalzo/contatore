@@ -1,5 +1,5 @@
 ## Cosa cambia
-<!-- 1-2 frasi. La AI review (Gemini) usa questa descrizione come contesto: scrivila bene. -->
+<!-- 1-2 frasi. La AI review (CodeRabbit) usa questa descrizione come contesto: scrivila bene. -->
 
 ## Perché
 <!-- motivazione, oppure "Closes #<issue>" -->

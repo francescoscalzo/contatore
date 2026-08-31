@@ -38,20 +38,33 @@ create "status:blocked"       000000 "Bloccato"
 # COMMUNITY
 create "help wanted"     008672 "Serve aiuto"
 
-echo "== Branch protection su main =="
+echo "== Branch protection =="
 # require_code_owner_reviews e' su false: cosi' il template funziona SENZA
 # personalizzare il CODEOWNERS. Personalizza CODEOWNERS e metti CODEOWNERS=true
 # per obbligare la review dell'owner.
 CODEOWNERS=${CODEOWNERS:-false}
-gh api -X PUT "repos/$REPO/branches/main/protection" \
-  -H "Accept: application/vnd.github+json" \
-  -F "required_pull_request_reviews[required_approving_review_count]=1" \
-  -F "required_pull_request_reviews[require_code_owner_reviews]=$CODEOWNERS" \
-  -F "required_pull_request_reviews[dismiss_stale_reviews]=true" \
-  -F "required_conversation_resolution=true" \
-  -F "enforce_admins=false" \
-  -F "restrictions=null" \
-  -F "required_status_checks=null" \
-  || echo "  (branch protection: se fallisce, il repo e' privato su piano Free -> fallo dalla UI)"
+
+protect() {
+  local BR="$1"
+  gh api -X PUT "repos/$REPO/branches/$BR/protection" \
+    -H "Accept: application/vnd.github+json" \
+    -F "required_pull_request_reviews[required_approving_review_count]=1" \
+    -F "required_pull_request_reviews[require_code_owner_reviews]=$CODEOWNERS" \
+    -F "required_pull_request_reviews[dismiss_stale_reviews]=true" \
+    -F "required_conversation_resolution=true" \
+    -F "enforce_admins=false" \
+    -F "restrictions=null" \
+    -F "required_status_checks=null" \
+    && echo "  protetto: $BR" \
+    || echo "  (protezione $BR fallita: repo privato su piano Free? -> fallo dalla UI)"
+}
+
+# main: sempre. develop: solo se esiste (git-flow-lite: feature->develop->main)
+protect main
+if gh api "repos/$REPO/branches/develop" >/dev/null 2>&1; then
+  protect develop
+else
+  echo "  (develop non trovato: crealo e pushalo, poi rilancia per proteggerlo)"
+fi
 
 echo "Fatto."
