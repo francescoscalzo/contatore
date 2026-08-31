@@ -1,0 +1,14 @@
+# OPZIONALE — template shareable.
+# Chi usa questo repo sostituisce @OWNER con il proprio utente/team GitHub
+# (es. @mario-rossi oppure @mia-org/backend).
+# Serve solo se vuoi obbligare la review dell'owner:
+#   - personalizza le righe sotto
+#   - committa su main PRIMA di attivare l'enforcement
+#   - lancia:  CODEOWNERS=true bash setup-github.sh
+# Se non lo personalizzi, lascia pure com'è: la branch protection di default
+# non richiede la code-owner review.
+
+*                   @OWNER
+/src/routes/        @OWNER
+/.github/           @OWNER
+/.gemini/           @OWNER

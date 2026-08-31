@@ -1,0 +1,28 @@
+# CodeRabbit — configurazione review AI su GitHub
+# Root del repo, branch di default (main). Docs: https://docs.coderabbit.ai
+language: "it-IT"
+early_access: false
+enable_free_tier: true
+
+reviews:
+  profile: "chill"                # segnala il rilevante senza sommergere
+  request_changes_workflow: false # review non blocca il merge
+  high_level_summary: true
+  review_status: true
+  poem: false
+
+  path_instructions:
+    - path: "**/*.py"
+      instructions: >
+        Type hint obbligatori su ogni funzione (parametri e valore di ritorno).
+        Nessun secret hardcoded: leggere da variabili d'ambiente.
+        Gestire gli errori esplicitamente (except mirati, messaggi utili);
+        niente except generici che silenziano l'eccezione.
+
+  auto_review:
+    enabled: true
+    base_branches:
+      - "main"
+
+chat:
+  auto_reply: true
