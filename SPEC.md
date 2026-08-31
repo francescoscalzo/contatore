@@ -15,13 +15,9 @@ Pagina con pulsante che incrementa un contatore client-side. Ad ogni click il fr
 - Ad ogni click su **+1**: frontend chiama backend con il valore aggiornato del contatore, mostra i 3 risultati ricevuti
 
 ## API
-`POST /calcola`
+`GET /compute/{n}`
 
-Request:
-```json
-{"value": 3}
-```
-- `value`: intero, `>= 0` (validato via pydantic, `ge=0`)
+- `n`: intero nel path, `>= 0` (validato via FastAPI `Path(ge=0)`)
 
 Response `200`:
 ```json
@@ -30,13 +26,13 @@ Response `200`:
 - Tutti i valori numerici arrotondati a 2 decimali
 - Calcolo stateless: nessun DB, nessuna sessione, nessun log persistente
 
-Response `422`: automatico da FastAPI/pydantic se `value` manca o non è un intero `>= 0`.
+Response `422`: automatico da FastAPI se `n` non è un intero `>= 0`.
 
 `GET /`
 - Serve `index.html`
 
 ## Gestione errori (frontend)
-- Chiamata a `/calcola` fallita (rete, 5xx, 422): contatore locale resta al valore già incrementato, si mostra un banner di errore non bloccante, l'area risultati mantiene l'ultimo valore valido (non si azzera)
+- Chiamata a `/compute/{n}` fallita (rete, 5xx, 422): contatore locale resta al valore già incrementato, si mostra un banner di errore non bloccante, l'area risultati mantiene l'ultimo valore valido (non si azzera)
 - Nessun retry automatico
 
 ## UI
