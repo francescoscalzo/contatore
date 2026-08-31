@@ -45,10 +45,10 @@ echo "== Branch protection su main =="
 CODEOWNERS=${CODEOWNERS:-false}
 gh api -X PUT "repos/$REPO/branches/main/protection" \
   -H "Accept: application/vnd.github+json" \
-  -f "required_pull_request_reviews[required_approving_review_count]=1" \
+  -F "required_pull_request_reviews[required_approving_review_count]=1" \
   -F "required_pull_request_reviews[require_code_owner_reviews]=$CODEOWNERS" \
   -F "required_pull_request_reviews[dismiss_stale_reviews]=true" \
-  -F "required_conversation_resolution[enabled]=true" \
+  -F "required_conversation_resolution=true" \
   -F "enforce_admins=false" \
   -F "restrictions=null" \
   -F "required_status_checks=null" \
