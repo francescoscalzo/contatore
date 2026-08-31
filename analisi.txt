@@ -1,0 +1,12 @@
+CONTATORE - analisi
+
+Cosa deve fare:
+- pagina con un pulsante al centro e un contatore sotto
+- ogni clic -> contatore +1
+- refresh -> riparte da 0 (stato solo lato client)
+
+Backend:
+- ad ogni clic il frontend manda al backend il numero attuale
+- il backend risponde con: radice quadrata, quadrato, numero * pi greco (stateless)
+
+Stack (idea): index.html (frontend) + FastAPI (app.py) che serve anche la pagina.
